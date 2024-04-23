@@ -27,5 +27,6 @@ func main() {
 
 	fmt.Printf("Regression formula:\n%v\n", r.Formula)
 	fmt.Printf("Regression:\n%s\n", r)
+	fmt.Printf("Coeff:%v\n", r.GetCoeffs()[0])
 
 }
