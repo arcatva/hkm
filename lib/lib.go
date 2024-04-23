@@ -2,6 +2,7 @@ package lib
 
 import (
 	"encoding/csv"
+	"math"
 	"os"
 	"strconv"
 )
@@ -51,4 +52,32 @@ func ReadRow(rowNum int, start int, end int, allData [][]string) ([]float64, err
 
 	return result, nil
 
+}
+
+func CalculateMAPE(actual, predicted []float64) float64 {
+	if len(actual) != len(predicted) {
+		panic("Lengths of actual and predicted slices must be equal")
+	}
+
+	var sumPercentageError float64
+
+	for i := 0; i < len(actual); i++ {
+		actualValue := actual[i]
+		predictedValue := predicted[i]
+
+		// Avoid division by zero
+		if actualValue == 0 {
+			continue
+		}
+
+		// Calculate absolute percentage error
+		absPercentageError := math.Abs((actualValue - predictedValue) / actualValue)
+
+		// Sum up absolute percentage errors
+		sumPercentageError += absPercentageError
+	}
+
+	// Calculate MAPE
+	mape := (sumPercentageError / float64(len(actual))) * 100
+	return mape
 }
