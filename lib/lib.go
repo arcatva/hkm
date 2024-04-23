@@ -37,3 +37,18 @@ func ReadColumn(column int, allData [][]string) ([]float64, error) {
 	}
 	return result, nil
 }
+
+func ReadRow(rowNum int, start int, end int, allData [][]string) ([]float64, error) {
+	result := make([]float64, 0)
+
+	for current := start; current <= end; current++ {
+		value, err := strconv.ParseFloat(allData[rowNum][current], 32)
+		if err != nil {
+			return result, nil
+		}
+		result = append(result, value)
+	}
+
+	return result, nil
+
+}
