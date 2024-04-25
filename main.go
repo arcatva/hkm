@@ -38,33 +38,6 @@ func main() {
 	}
 	fmt.Printf("Finished beta couting...\n")
 	fmt.Printf("=======================\n")
-	allR2 := make([]float64, 0)
-
-	for i := 1; i <= 516; i++ {
-		row, _ := lib.ReadRow(i, 9, 33, allData)
-		r := new(regression.Regression)
-		r.SetObserved(allData[i][0])
-		r.SetVar(0, "slopeShock")
-		r.SetVar(1, "slopeMarket")
-
-		for j := 0; j <= 24; j++ {
-			r.Train(
-				regression.DataPoint(row[j], []float64{slopeShockList[j], slopeMarketList[j]}),
-			)
-		}
-		r.Run()
-		fmt.Printf("adding row %v 's R2: %v\n", i, r.R2)
-		allR2 = append(allR2, r.R2)
-	}
-
-	var allR2Aggregated float64
-
-	for _, v := range allR2 {
-		allR2Aggregated += v
-	}
-	averageR2 := allR2Aggregated / 516
-	fmt.Printf("=======================\n")
-	fmt.Println("Average R2 is:")
-	fmt.Println(averageR2)
-
+	lib.CalculateAverage(1, 516, 10, 34, allData, slopeShockList, slopeMarketList)
+	lib.CalculateAverage(1, 516, 35, 54, allData, slopeShockList, slopeMarketList)
 }
